@@ -40,7 +40,8 @@ const computeUnfinishedGameScore: ComputeUnfinishedGameScore = (
   if (gapBetweenPlayer1And2 > 0) {
     return "advantage player1";
   } else {
-    return "Sorry I lost track of the score... :D";
+    // Impossible case
+    throw new Error("Sorry I lost track of the score... :D");
   }
 };
 
