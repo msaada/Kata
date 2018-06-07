@@ -24,6 +24,19 @@ There are 3 sessions each with a very specific goal
 + Functions should not take any boolean argument
 + Encapsulate conditionnals in functions
 
+## Progress
+
++ [ ] Bank
++ [ ] Bowling
++ [ ] Diamond
++ [ ] MarsRover
++ [ ] Minesweeper
++ [ ] Monads
++ [ ] OrganizeImports
++ [ ] RPNCalculator
++ [x] StringCalculator
++ [x] Tennis
+
 ## Ressources
 
 + [Clean code Javascript](https://github.com/ryanmcdermott/clean-code-javascript)
