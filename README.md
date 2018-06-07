@@ -22,9 +22,7 @@ There are 3 sessions each with a very specific goal
 + No mutable state
 + 2 or fewer function arguments
 + Functions should not take any boolean argument
-+ Functional over imperative (no for loops, no let)
-+ Encapsulate conditinonals in functions
-+ Code should be read from top to bottom with function callers and callee being close
++ Encapsulate conditionnals in functions
 
 ## Ressources
 
