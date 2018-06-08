@@ -25,11 +25,13 @@ const computeUnfinishedGameScore: ComputeUnfinishedGameScore = (
     player1Points,
     player2Points
   );
-
-  if (player1Points > 2 && player2Points > 2 && gapBetweenPlayer1And2 === 0) {
+  const isDeuce =
+    player1Points > 2 && player2Points > 2 && gapBetweenPlayer1And2 === 0;
+  if (isDeuce) {
     return "deuce";
   }
-  if (player1Points < 4 && player2Points < 4) {
+  const noPlayerHasReachedForty = player1Points < 4 && player2Points < 4;
+  if (noPlayerHasReachedForty) {
     return `${humanReadableScores[player1Points]}-${
       humanReadableScores[player2Points]
     }`;
