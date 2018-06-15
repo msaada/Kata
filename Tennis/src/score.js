@@ -3,15 +3,6 @@
 type ScoringPlayer = 1 | 2;
 type Score = "love" | "fifteen" | "thirty" | "forty";
 
-type ComputeGapBetweenPlayer1And2 = (
-  player1Points: number,
-  player2Points: number
-) => number;
-const computeGapBetweenPlayer1And2: ComputeGapBetweenPlayer1And2 = (
-  player1Points,
-  player2Points
-) => player1Points - player2Points;
-
 type ComputeUnfinishedGameScore = (
   player1Points: number,
   player2Points: number
@@ -20,11 +11,8 @@ const computeUnfinishedGameScore: ComputeUnfinishedGameScore = (
   player1Points,
   player2Points
 ) => {
-  const humanReadableScores: Score[] = ["love", "fifteen", "thirty", "forty"];
-  const gapBetweenPlayer1And2 = computeGapBetweenPlayer1And2(
-    player1Points,
-    player2Points
-  );
+  const gapBetweenPlayer1And2 = player1Points - player2Points;
+
   const isDeuce =
     player1Points > 2 && player2Points > 2 && gapBetweenPlayer1And2 === 0;
   if (isDeuce) {
@@ -32,15 +20,20 @@ const computeUnfinishedGameScore: ComputeUnfinishedGameScore = (
   }
   const noPlayerHasReachedForty = player1Points < 4 && player2Points < 4;
   if (noPlayerHasReachedForty) {
+    const humanReadableScores: Score[] = ["love", "fifteen", "thirty", "forty"];
     return `${humanReadableScores[player1Points]}-${
       humanReadableScores[player2Points]
     }`;
   }
-  if (gapBetweenPlayer1And2 < 0) {
-    return "advantage player2";
-  }
+
+  const hasPlayer1GotAdvantage = gapBetweenPlayer1And2 > 0;
   if (gapBetweenPlayer1And2 > 0) {
     return "advantage player1";
+  }
+
+  const hasPlayer2GotAdvantage = gapBetweenPlayer1And2 < 0;
+  if (hasPlayer2GotAdvantage) {
+    return "advantage player2";
   } else {
     // Impossible case
     throw new Error("Sorry I lost track of the score... :D");
@@ -56,24 +49,20 @@ const hasPlayer1AlreadyWon: HasPlayerAlreadyWon = (
   player1Points,
   player2Points
 ) => {
-  return (
-    player1Points > 3 &&
-    computeGapBetweenPlayer1And2(player1Points, player2Points) > 1
-  );
+  const gapBetweenPlayer1And2 = player1Points - player2Points;
+  return player1Points > 3 && gapBetweenPlayer1And2 > 1;
 };
 
 const hasPlayer2AlreadyWon: HasPlayerAlreadyWon = (
   player1Points,
   player2Points
 ) => {
-  return (
-    player2Points > 3 &&
-    computeGapBetweenPlayer1And2(player1Points, player2Points) < -1
-  );
+  const gapBetweenPlayer1And2 = player1Points - player2Points;
+  return player2Points > 3 && gapBetweenPlayer1And2 < -1;
 };
 
-type ComputeFinalScore = (whoScores: ScoringPlayer[]) => string;
-const computeFinalScore: ComputeFinalScore = whoScores => {
+type ComputeScore = (whoScores: ScoringPlayer[]) => string;
+const computeScore: ComputeScore = whoScores => {
   let player1Points = 0;
   let player2Points = 0;
   for (let score of whoScores) {
@@ -92,4 +81,4 @@ const computeFinalScore: ComputeFinalScore = whoScores => {
   return computeUnfinishedGameScore(player1Points, player2Points);
 };
 
-export { computeFinalScore };
+export { computeScore as default };
